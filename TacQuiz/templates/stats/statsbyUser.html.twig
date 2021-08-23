@@ -1,0 +1,74 @@
+
+{% include 'temp1.html.twig' %}
+
+<div class="container">
+    <h1 align="center">Stats by User</h1>
+    <br />
+
+    <div class="table-responsive">
+        <a type="submit" href="{{path('pdf',{res:res})}}" class="btn-primary" style=" padding-right:1%; padding-left:1%; font-size:large; margin-left:0%;"  >export</a>
+
+        <table id="#employee_grid" class="table table-bordered table-striped">
+
+
+            <thead>
+            <tr>
+            {% for P in pi %}
+                <th>{{ P.information }}</th>
+            {% endfor %}
+                <th>
+                    <select name="Result" id="SearchbyResult"  class="form-control" onchange="document.location.href=this.value;">
+                        <option value="">Search by Result</option>
+                        <option value="{{path('filter',{res:10,id:quiz.id})}}">10%</option>
+                        <option value="{{path('filter',{res:20,id:quiz.id})}}">20%</option>
+                        <option value="{{path('filter',{res:30,id:quiz.id})}}">30%</option>
+                        <option value="{{path('filter',{res:40,id:quiz.id})}}">40%</option>
+                        <option value="{{path('filter',{res:50,id:quiz.id})}}">50%</option>
+                        <option value="{{path('filter',{res:60,id:quiz.id})}}">60%</option>
+                        <option value="{{path('filter',{res:70,id:quiz.id})}}">70%</option>
+                        <option value="{{path('filter',{res:80,id:quiz.id})}}">80%</option>
+                        <option value="{{path('filter',{res:90,id:quiz.id})}}">90%</option>
+                        <option value="{{path('filter',{res:100,id:quiz.id})}}">100%</option>
+                        <option value="{{path('StatS',{id:quiz.id})}}">All</option>
+
+                    </select>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set Res=0 %}
+            {% for i in info %}
+
+            <tr>
+                 {% for r in i %}
+                     {% set Res=r.getResult().getResult() %}
+
+                 {% endfor %}
+                {% for r in i %}
+                {% if r.reply!=null %}
+
+                    <td>{{r.reply}}</td>
+
+                {% else %}
+                   <td>{{ a }}</td>
+                {% endif %}
+                {% endfor %}
+                <td>{{ Res |number_format(2) }} %</td>
+            </tr>
+            {% endfor  %}
+
+            </tbody>
+
+
+
+        </table>
+    </div>
+</div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    $(document).ready(function(){
+</script>
+
+
+
+{% include 'temp2.html.twig' %}

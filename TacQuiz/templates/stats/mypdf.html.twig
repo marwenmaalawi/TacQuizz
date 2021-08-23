@@ -1,0 +1,50 @@
+<style>
+    table, td, th {
+        border: 1px solid black;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .titles{
+        text-align: left;
+    }
+</style>
+<center><h2>Stats By User</h2></center>
+<br>
+<table>
+    <thead>
+    <tr>
+        {% for P in pi %}
+            <th>{{ P.information }}</th>
+        {% endfor %}
+        <th>Result</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set Res=0 %}
+    {% for i in info %}
+
+        <tr>
+            {% for r in i %}
+                {% set Res=r.getResult().getResult() %}
+
+            {% endfor %}
+            {% for r in i %}
+                {% if r.reply!=null %}
+
+                    <td>{{r.reply}}</td>
+
+                {% else %}
+                    <td>{{ a }}</td>
+                {% endif %}
+            {% endfor %}
+            <td>{{ Res |number_format(2) }} %</td>
+        </tr>
+    {% endfor  %}
+
+    </tbody>
+
+
+
+</table>

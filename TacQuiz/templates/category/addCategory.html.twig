@@ -1,0 +1,39 @@
+<style> .btn-primary {
+        margin-top: 1%;
+        width: 100px;
+        background-color: #5CB85C !important;
+        border-color: #5CB85C !important;
+        border-radius: 6px;
+
+
+    }
+    .btn-primary:hover {
+        opacity: 0.8;
+        background-color: #5CB85C !important;
+        border-color: #5CB85C !important;
+        border-radius: 6px;
+    }
+    .btn-primary:active {
+        background-color: #5CB85C !important;
+        border-color: #5CB85C !important;
+        border-radius: 6px;
+    }
+</style>
+{% include 'Temp1.html.twig' %}
+<div style ="margin-left: 23%; margin-right: 23%;  border: solid 1px #5CB85C; padding:2%; border-radius: 30px; margin-bottom: 25px;  "  >
+    <h1 style ="margin-bottom: 2%; text-align: center; color: #5CB85C ;  " > New Category  </h1>
+    {{ form_start(form) }}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {{ form_label(form.Title,"")  }}
+    {{ form_widget(form.Title) }}
+    {{ form_label(form.Description,"")  }}
+    {{ form_widget(form.Description) }}
+    <div class="btn-primary "> {{ form_row(form.Submit) }} </div>
+    {{ form_end(form) }}
+
+</div>
+{% include 'Temp2.html.twig' %}

@@ -1,0 +1,277 @@
+{% include 'Temp1.html.twig' %}
+<style>
+    #custombackground{
+        background-image: url("{{ asset('uploads/' ~ quiz.image) }} ");
+        background-image: no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+    .btn-primary {
+        margin-top: 1%;
+
+        background-color: #5CB85C !important;
+        border-color: #5CB85C !important;
+        border-radius: 6px;
+
+
+    }
+    .btn-primary:hover {
+        opacity: 0.8;
+        background-color: #5CB85C !important;
+        border-color: #5CB85C !important;
+        border-radius: 6px;
+    }
+    .btn-primary:active {
+        background-color: #5CB85C !important;
+        border-color: #5CB85C !important;
+        border-radius: 6px;
+    }
+</style>
+
+{% if question.answerType =="text" %}
+    <div class="container mt-5" >
+    <div class="d-flex justify-content-center row" >
+        <div class="col-md-10 col-lg-10" >
+            <div class="border"  id="custombackground" >
+                <div class="question p-3 border-bottom" style="background-color: rgba(255,255,255,0.8);">
+                    <div  class="d-flex flex-row justify-content-between align-items-center mcq">
+                        <span>
+                            <a href="{{path('DisplayQues',{id:quiz.id}  )}}"   style="background-color: rgba(255,255,255,0.0); border:none;">
+                                <i class='fas fa-sign-out-alt fa-rotate-180 text-dark fa-2x'></i> </a>
+                        </span>
+                        <center style="margin-left: 10%; text-transform: uppercase; font-family: 'Microsoft Tai Le'  ; font-size: x-large ;color: black;">{{quiz.Title}}</center>
+
+                        <span><button type="button" data-toggle="collapse" data-target="#addQuestion" aria-expanded="false" aria-controls="collapseExample" class="btn-primary" style="font-size: large;" > Add Choice</button></span>
+
+                    </div>
+                </div>
+
+                <div class="question bg-transparent p-3 border-bottom" >
+                    <div class=" container mt-5">
+                        <div class="d-flex justify-content-center row">
+                            <div class="col-md-10 col-lg-10">
+                                {% if messages!="" %}
+
+                                    <div >
+                                        <div class=border>
+                                            <div class="question p-3 border-bottom"  style="background-color: rgba(255,255,255,0.6);">
+                                                <br><i class="fas fa-exclamation-triangle text-danger"></i><a style="color:red !important;">{{ messages }}</a>
+
+                                                {{form(addform)}}
+
+                                            </div>
+                                        </div>
+                                    </div> {% else %}
+
+                                    <div class="collapse" id="addQuestion">
+                                        <div class=border>
+                                            <div class="question p-3 border-bottom"  style="background-color: rgba(255,255,255,0.6);">
+                                                {{form(addform)}}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+                            </div>
+                        </div>
+                    <br>
+
+
+
+                <div class="question p-3 border-bottom"  >
+                    <div class="d-flex flex-row justify-content-between align-items-center mcq" >
+                        {% if question.imageLink!=null %}
+                            <img style="height: 180px; width: 250px ;margin-bottom: 10px;margin-right: 5px" src="{{ asset('uploads/' ~ question.imageLink)}}">
+                        {% else %}
+                            <span></span>
+                        {% endif%}
+                    </div>
+                </div>
+
+                    <div class="question p-3 border-bottom"  style="background-color: rgba(255,255,255,0.6);">
+                        <div class="d-flex flex-row align-items-center question-title">
+                            <h3 class="text-danger">Q.</h3>
+                            <h5 class="mt-1 ml-2">{{ question.question }}</h5>
+                        </div>
+                        {% for a in choices %}
+                            <ul class="list-group">
+                                {% if a.state==true %}
+                                    <div>
+                                        <a style="background-color: rgba(255,255,255,0.0); border:none;" href=" {{path('DeleteChoice',{id:a.id,idquiz:quiz.id})}} "   class="btn btn-sm btn-white font-weight-bold" onclick="return confirm('Are you sure you want to delete this item?');">
+                                            <i class="flaticon2-trash text-danger" title="Delete" ></i>
+                                        </a>
+                                        <a id="{{ a.id }}"  type="button" data-toggle="collapse" data-target="#editChoice{{ a.id }}" aria-expanded="false" aria-controls="collapseExample"  class="btn btn-sm btn-white font-weight-bold"  style="background-color: rgba(255,255,255,0.0); border:none;">
+                                            <i class="ki ki-gear text-success"  title="Edit"></i>
+                                        </a>
+                                    </div>
+                                    <li class="list-group-item" style="background-color:#5CB85C; color:white; margin-bottom: 10px">{{ a.getChoice() }}</li>
+                                    <form action="{{ path('Editchoices') }}"  id="editChoice{{ a.id }}" class="form-group collapse ">
+                                        <input type="hidden" name="InputId" class="form-control" id="moninput{{ a.id }}"  value="{{ a.getId() }}" style="padding: 5px; margin-bottom: 10px"/>
+                                        <select name="OptionEdit" class="custom-select mr-sm-2" id="monselect{{ a.id }}">
+                                            <option value="true" selected>true</option>
+                                            <option value="false"   >false </option>
+                                        </select>
+                                        <br>
+                                        <input name="InputEdit" class="form-control" id="moninput{{ a.id }}"  value="{{ a.getChoice() }}" style="padding: 5px; margin-bottom: 10px"/>
+                                        <button class="btn btn-primary"  type="submit">Edit</button>
+                                    </form>
+
+
+
+                                {% else %}
+                                    <div>
+                                        <a style="background-color: rgba(255,255,255,0.0); border:none;" href=" {{path('DeleteChoice',{id:a.id,idquiz:quiz.id})}} "  class="btn btn-sm btn-white font-weight-bold" onclick="return confirm('Are you sure you want to delete this item?');">
+                                            <i class="flaticon2-trash text-danger" title="Delete" ></i>
+                                        </a>
+                                        <a id="{{ a.id }}" type="button" data-toggle="collapse" data-target="#editChoice{{ a.id }}" aria-expanded="false" aria-controls="collapseExample" class="btn btn-sm btn-white font-weight-bold"  style="background-color: rgba(255,255,255,0.0); border:none;">
+                                            <i class="ki ki-gear text-success"  title="Edit"></i>
+                                        </a>
+                                    </div>
+                                    <li class="list-group-item" style="color:red; margin-bottom: 10px">{{ a.getChoice() }}</li>
+
+                                    <form  action="{{ path('Editchoices') }}"  id="editChoice{{ a.id }}" class="form-group collapse ">
+                                            <input type="hidden" name="InputId" class="form-control" id="moninput{{ a.id }}"  value="{{ a.getId() }}" style="padding: 5px; margin-bottom: 10px"/>
+
+                                    <select name="OptionEdit" class="custom-select mr-sm-2" id="monselect{{ a.id }}">
+                                        <option value="true">true</option>
+                                        <option value="false"  selected >false </option>
+                                    </select>
+                                    <br>
+                                    <input  name="InputEdit" class="form-control" id="moninput{{ a.id }}"  value="{{ a.getChoice() }}" style="padding: 5px; margin-bottom: 10px"/>
+                                    <button class="btn btn-primary"  type="submit">Edit</button>
+                                    </form>
+                                {% endif %}
+                            </ul>
+                        {% endfor %}
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+</div></div>
+{% else %}
+    <div class="container mt-5" >
+        <div class="d-flex justify-content-center row" >
+            <div class="col-md-10 col-lg-10" >
+                <div class="border"  id="custombackground" >
+                    <div class="question p-3 border-bottom" style="background-color: rgba(255,255,255,0.5);">
+                        <div  class="d-flex flex-row justify-content-between align-items-center mcq">
+                            <span>
+                            <a href="{{path('DisplayQues',{id:quiz.id}  )}}"   style="background-color: rgba(255,255,255,0.0); border:none;">
+                                <i class='fas fa-sign-out-alt fa-rotate-180 text-dark fa-2x'></i> </a>
+                            </span>
+                            <center style="margin-left: 15%; text-transform: uppercase; font-family: 'Microsoft Tai Le'  ; font-size: x-large ;color: white;">{{quiz.Title}}</center>
+
+                                <span><button type="button" data-toggle="collapse" data-target="#addQuestion" aria-expanded="false" aria-controls="collapseExample" class="btn-primary" style="font-size: large;" > Add Choice</button></span>
+
+                    </div>
+                    <div class="question bg-transparent p-3 border-bottom" >
+                        <div class=" container mt-5">
+                            <div class="d-flex justify-content-center row">
+                                <div class="col-md-10 col-lg-10">
+                                    {% if message!="" %}
+
+                                        <div >
+                                            <div class=border>
+                                                <div class="question p-3 border-bottom"  style="background-color: rgba(255,255,255,0.6);">
+                                                    <br><i class="fas fa-exclamation-triangle text-danger"></i><a style="color:red !important;">{{ message }}</a>
+
+                                                    {{form(addform)}}
+
+                                                </div>
+                                            </div>
+                                        </div> {% else %}
+
+                                        <div class="collapse" id="addQuestion" >
+                                            <div class=border>
+                                                <div class="question p-3 border-bottom"  style="background-color: rgba(255,255,255,0.6);">
+                                                    {{form(addform)}}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+
+                                </div>
+                            </div>
+
+                        <br>
+
+                        <div class="d-flex flex-row justify-content-between align-items-center mcq" >
+                            {% if question.imageLink!=null %}
+                                <img style="height: 180px; width: 250px ;margin-bottom: 10px;margin-right: 5px" src="{{ asset('uploads/' ~ question.imageLink)}}">
+                            {% else %}
+                                <span></span>
+                            {% endif%}
+                        </div>
+                    </div>
+
+                    <div class="question p-3 border-bottom"  style="background-color: rgba(255,255,255,0.8);">
+                        <div class="d-flex flex-row align-items-center question-title">
+                            <h3 class="text-danger">Q.</h3>
+                            <h5 class="mt-1 ml-2">{{ question.question }}</h5>
+                        </div>
+                        {% for a in question.getChoices() %}
+                            <div>
+                                <a style="background-color: rgba(255,255,255,0.0); border:none;" href=" {{path('DeleteChoice',{id:a.id,idquiz:quiz.id})}} "  class="btn btn-sm btn-white font-weight-bold" onclick="return confirm('Are you sure you want to delete this item?');">
+                                    <i class="flaticon2-trash text-danger" title="Delete" ></i>
+                                </a>
+                                <a id="{{ a.id }}" type="button" data-toggle="collapse" data-target="#editChoice{{ a.id }}" aria-expanded="false" aria-controls="collapseExample" class="btn btn-sm btn-white font-weight-bold"  style="background-color: rgba(255,255,255,0.0); border:none;">
+                                    <i class="ki ki-gear text-success"  title="Edit"></i>
+                                </a>
+                            </div>
+                            <img style="height: 220px; width: 310px ;margin-bottom: 10px;margin-right: 5px" src="{{ asset('uploads/' ~ a.getChoice())}}">
+                            {% if a.state==true %}
+                                <i style="color: #5CB85C; margin-right: 5px ;" class="fas fa-check-circle "></i>
+                                <form  enctype="multipart/form-data" method="post"  action="{{ path('EditchoicesImage') }}"  id="editChoice{{ a.id }}" class="form-group collapse ">
+                                    <input type="hidden" name="InputId" class="form-control" id="moninput{{ a.id }}"  value="{{ a.getId() }}" style="padding: 5px; margin-bottom: 10px"/>
+
+                                    <select name="OptionEdit" class="custom-select mr-sm-2" id="monselect{{ a.id }}">
+                                        <option value="true" selected>true</option>
+                                        <option value="false">false </option>
+                                    </select>
+                                    <br>
+                                    <div class="custom-file">
+                                        <input type="file" name="myfile" class="custom-file-input" id="customFileLang" >
+                                        <label class="custom-file-label" for="customFileLang"></label>
+                                    </div>
+                                    <button class="btn btn-primary"  type="submit">Edit</button>
+                                </form>
+                            {% else %}
+                                <i style="margin-right: 5px" class="fa fa-times-circle text-danger mr-5" aria-hidden="true"></i>
+                                <form enctype="multipart/form-data" method="post"  action="{{ path('EditchoicesImage') }}"  id="editChoice{{ a.id }}" class="form-group collapse ">
+                                    <input type="hidden" name="InputId" class="form-control" id="moninput{{ a.id }}"  value="{{ a.getId() }}" style="padding: 5px; margin-bottom: 10px"/>
+
+                                    <select name="OptionEdit" class="custom-select mr-sm-2" id="monselect{{ a.id }}">
+                                        <option value="true">true</option>
+                                        <option value="false"  selected >false </option>
+                                    </select>
+                                    <br>
+                                   <div class="custom-file">
+                                        <input type="file"  class="custom-file-input" id="customFileLang"  >
+                                        <label class="custom-file-label" for="customFileLang"></label>
+                                    </div>
+                                    <button class="btn btn-primary"  type="submit">Edit</button>
+                                </form>
+                            {% endif %}
+
+
+                        {% endfor %}
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div></div>
+
+{% endif %}
+
+{% include 'Temp2.html.twig' %}

@@ -1,0 +1,59 @@
+
+{% include 'Temp1.html.twig' %}
+<style> .btn-primary {
+        margin-top: 1%;
+        width: 100px;
+        background-color: #5CB85C !important;
+        border-color: #5CB85C !important;
+        border-radius: 6px;
+
+
+    }
+    .btn-primary:hover {
+        opacity: 0.8;
+        background-color: #5CB85C !important;
+        border-color: #5CB85C !important;
+        border-radius: 6px;
+    }
+    .btn-primary:active {
+        background-color: #5CB85C !important;
+        border-color: #5CB85C !important;
+        border-radius: 6px;
+    }
+</style>
+
+<div class="row" >
+    {% for C in listCat %}
+   <div class="col-md-3" style="  margin-bottom: 15px;">
+    <div class="card card-custom gutter-b" style="border: solid 1px #5CB85C; border-radius:6px;">
+        <div class="card-header">
+
+            <div class="card-title" style=" text-shadow: 2px 2px #CED9DF;   text-transform: uppercase;" >
+                <h3 class="card-label">
+                    {{ C.Title }}
+                </h3>
+                <a  href="{{path('DisplayQuizCat',{id:C.id})}}"></a>
+
+            </div>
+
+
+        </div>
+        <div class="card-body"  >
+
+       <a  href="{{path('DisplayQuizCat',{id:C.id})}}"><button class="btn-primary" style="margin-left: 150px;">Consult</button></a>
+        </div>
+    </div>
+
+
+   </div>
+    {%endfor%}
+
+
+
+
+
+
+
+</div>
+
+{% include 'Temp2.html.twig' %}

@@ -1,0 +1,83 @@
+<style> .btn-primary {
+        margin-top: 1%;
+        width: 100px;
+        background-color: #5CB85C !important;
+        border-color: #5CB85C !important;
+        border-radius: 6px;
+
+
+    }
+    .btn-primary:hover {
+        opacity: 0.8;
+        background-color: #5CB85C !important;
+        border-color: #5CB85C !important;
+        border-radius: 6px;
+    }
+    .btn-primary:active {
+        background-color: #5CB85C !important;
+        border-color: #5CB85C !important;
+        border-radius: 6px;
+    }
+</style>
+{% include 'Temp1.html.twig' %}
+<div style ="margin-left: 23%; margin-right: 23%;  border: solid 1px #5CB85C; padding:2%; border-radius: 30px; margin-bottom: 25px;  "  >
+    <h1 style ="margin-bottom: 2%; text-align: center; color: #5CB85C ;  " > Edit Quiz  </h1>
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {{ form_label(form.Category,"")  }}
+    {{ form_widget(form.Category) }}
+    {{ form_label(form.Title,"")  }}
+    {{ form_widget(form.Title) }}
+    {{ form_label(form.date_quiz,"")  }}
+    {{ form_widget(form.date_quiz) }}
+    {{ form_label(form.minScore,"minScore")  }}
+    {{ form_widget(form.minScore) }}
+    {{ form_label(form.image,"")  }}
+    {{ form_widget(form.image) }}
+    {{ form_label(form.random,"")  }}
+    {{ form_widget(form.random) }}
+    {{ form_label(form.publicResult,"")  }}
+    {{ form_widget(form.publicResult) }}
+    {{ form_label(form.timer,"")  }}
+
+    {{ form_widget(form.timer) }}
+    <div class="collapse" id="addtimer">
+        <h6 style="color:#3699FF">number of minutes ? :</h6>
+        {{ form_widget(form.Quiztime) }}
+
+    </div>
+    <div class="btn-primary "> {{ form_row(form.Update) }} </div>
+    {{ form_end(form) }}
+
+</div>
+<script src="{{ asset('jquery/dist/jquery.min.js') }}"></script>
+
+<script>
+
+    $(document).ready(function() {
+
+        $('#quiz_timer').val(function () {
+            if (this.checked){
+                $('#addtimer').addClass('show');
+            }else{
+                $('#addtimer').removeClass('show');
+
+            }});
+
+        $('#quiz_timer').change(function () {
+            if (this.checked){
+                $('#addtimer').addClass('show');
+            }else{
+                $('#addtimer').removeClass('show');
+
+            }
+        });
+    });
+
+    //
+</script>
+{% include 'Temp2.html.twig' %}

@@ -1,0 +1,59 @@
+{% include 'temp1.html.twig' %}
+<select name="filter by success rate" id="category"  class="form-control" onchange="document.location.href=this.value;">
+    <option value="">Search by Result</option>
+    <option value="{{path('filterSuccess',{res:10})}}">10%</option>
+    <option value="{{path('filterSuccess',{res:20})}}">20%</option>
+    <option value="{{path('filterSuccess',{res:30})}}">30%</option>
+    <option value="{{path('filterSuccess',{res:40})}}">40%</option>
+    <option value="{{path('filterSuccess',{res:50})}}">50%</option>
+    <option value="{{path('filterSuccess',{res:60})}}">60%</option>
+    <option value="{{path('filterSuccess',{res:70})}}">70%</option>
+    <option value="{{path('filterSuccess',{res:80})}}">80%</option>
+    <option value="{{path('filterSuccess',{res:90})}}">90%</option>
+    <option value="{{path('filterSuccess',{res:100})}}">100%</option>
+    <option value="{{path('StatSuccess')}}">All</option>
+</select>
+{% set i=1 %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+{% for s in Val %}
+
+<div class="content">
+    <div>
+   <h1 style ="margin-bottom: 2%; text-align: center; color: #d11414 ;">Stats by success Rate of {{ s.Quiz|upper }} in the category {{ s.cat |upper }}  </h1>
+    </div>
+    <div class="table-responsive">
+        <div class="form-group">
+            <hr class="invis">
+            <div class="container">
+                <canvas id="StatBySucc{{ i }}" width="400" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    let Stat{{ i }} = document.querySelector("#StatBySucc{{ i }}")
+    let annGraph{{ i }} = new Chart(Stat{{ i }}, {
+        scaleFontColor: "black",
+        type: "doughnut",
+        data: {
+            labels: {{ leg|json_encode|raw }},
+            datasets: [{
+                label: "note",
+                data: [{{ s.success }},{{ s.failure }}],
+                backgroundColor: ['#5CB85C','#d11414'],
+            }]
+        },
+        options: {
+            width: 80,
+            text: {
+                display: true,
+                color: '#f6f6f6',
+            },
+        }})
+</script>
+    {% set i =i+1 %}
+{% endfor %}
+{% include 'temp2.html.twig' %}

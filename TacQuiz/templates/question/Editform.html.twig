@@ -1,0 +1,28 @@
+<div  id="myForm">
+
+
+      <div class="question p-3 border-bottom"  style="height: 500px; background-color: rgba(255,255,255,0.6);">
+
+            <center><h4>Edit Question</h4></center>
+           {{ form_start(editform, {'action': path('EditQues',{'id':id}), 'method': 'post', 'attr':  {'class': 'form-container'}  }) }}
+            {{ form_label(editform.answerType,"")  }}
+            {{ form_widget(editform.answerType , { 'attr':{'disabled':'disabled'} }) }}
+            <br>
+            {{ form_label(editform.imageLink,"")  }}
+            {{ form_widget(editform.imageLink) }}
+            <br>
+            <br>
+            {{ form_label(editform.question,"")  }}
+            {{ form_widget(editform.question ) }}
+            <br>
+            <br>
+            {{ form_row(editform.Edit) }}
+
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+
+
+          {{ form_end(editform) }}
+      </div>
+
+
+</div>

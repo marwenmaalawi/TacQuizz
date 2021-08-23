@@ -1,0 +1,24 @@
+{% include 'Temp1.html.twig' %}
+
+
+
+ {% for C in listCat %}
+     <div class="card card-custom gutter-b">
+         <div class="card-header">
+
+             <div class="card-title">
+                 <h3 class="card-label">
+                     {{ C.Title }} by  {{ C.User.getUsername() }}
+                 </h3>
+             </div>
+
+
+         </div>
+         <div class="card-body">
+             {{ C.Description }}
+
+         </div>
+     </div>
+ {% endfor %}
+
+{% include 'Temp2.html.twig' %}

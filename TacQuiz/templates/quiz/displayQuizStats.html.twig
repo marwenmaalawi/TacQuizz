@@ -1,0 +1,103 @@
+{% include 'Temp1.html.twig' %}
+<style>
+
+    #custombackground{
+        background-image: url("{{ asset('uploads/stat.png'  ) }} ");
+        background-image: no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+
+    }
+    .btn-primary {
+        margin-top: 1%;
+
+        background-color: rgba(92,184,92,0.5) !important;
+        border-color: #5CB85C !important;
+        border-radius: 6px;
+
+
+    }
+    .btn-primary:hover {
+        opacity: 0.8;
+        background-color: #5CB85C !important;
+        border-color: #5CB85C !important;
+        border-radius: 6px;
+    }
+    .btn-primary:active {
+        background-color: #5CB85C !important;
+        border-color: #5CB85C !important;
+        border-radius: 6px;
+    }
+</style>
+{% set count=0 %}
+{% for Q in Quiz %}
+    {% if Q.public==true %}
+        {% set count=count+1 %}
+    {% endif %}
+{% endfor %}
+{% if count <5 %}
+    <div class="card"id="custombackground"  style="height: 800px" >
+        <div class="container">
+            <div class="card-body">
+                <center><h2 class="card-title">Results by Quiz</h2></center>
+
+                <div class="row" >
+
+                    {% for Q in Quiz %}
+                        {% if Q.public==true %}
+
+                            <div class="col-xs-12 col-sm-3">
+                                <div class="card" style="background-color: rgba(255,255,255,0)"  >
+                                    <img src="{{ asset('uploads/' ~ Q.getImage())}}" class="card-img-top" alt="..." style="opacity:0.5; ">
+                                    <div class="card-body">
+                                        <center><h5 class="card-title">{{ Q.Title |upper}} in {{Q.category}}</h5></center>
+                                        <a href="{{path('StatS',{id:Q.id})}}" class="btn btn-primary" style="width: 100% ">Consult Results Stats</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="card"id="custombackground" >
+        <div class="container">
+            <div class="card-body">
+                <center><h2 class="card-title">Results by Quiz</h2></center>
+
+                <div class="row" >
+
+                    {% for Q in Quiz %}
+                        {% if Q.public==true %}
+
+                            <div class="col-xs-12 col-sm-3">
+                                <div class="card" style="background-color: rgba(255,255,255,0)"  >
+                                    <img src="{{ asset('uploads/' ~ Q.getImage())}}" class="card-img-top" alt="..." style="opacity:0.5; ">
+                                    <div class="card-body">
+                                        <center><h5 class="card-title">{{ Q.Title |upper}} in {{Q.category}}</h5></center>
+                                        <a href="{{path('StatS',{id:Q.id})}}" class="btn btn-primary" style="width: 100% ">Consult Results Stats</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+
+
+
+
+{% include 'Temp2.html.twig' %}

@@ -1,0 +1,133 @@
+{% include 'Temp1.html.twig' %}
+
+<style>
+    progress {
+        width: 40%;
+        display: block; /* default: inline-block */
+        margin: 2em auto;
+        padding: 3px;
+        border: 0 none;
+        background: rgba(68,68,68,0.8);
+        border-radius: 14px;
+    }
+    progress::-moz-progress-bar {
+        border-radius: 12px;
+        background: #5CB85C;
+
+    }
+    progress::-webkit-progress-bar {
+        background: transparent;
+    }
+    progress::-webkit-progress-value {
+        border-radius: 12px;
+        background: #5CB85C;
+    }
+    .card {
+        display: block;
+        margin-bottom: 20px;
+        line-height: 1.42857143;
+        background-color: #fff;
+        border-radius: 2px;
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+        transition: box-shadow .25s;
+    }
+    .card:hover {
+        box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    }
+    .img-card {
+        width: 100%;
+        height:200px;
+        border-top-left-radius:2px;
+        border-top-right-radius:2px;
+        display:block;
+        overflow: hidden;
+    }
+    .img-card img{
+        width: 100%;
+        height: 200px;
+        object-fit:cover;
+        transition: all .25s ease;
+    }
+    .card-content {
+        padding:15px;
+        text-align:left;
+    }
+    .card-title {
+        margin-top:0px;
+        font-weight: 700;
+        font-size: 1.65em;
+    }
+    .card-title a {
+        color: #000;
+        text-decoration: none !important;
+        text-transform: uppercase!important;
+        text-align: center!important;
+    }
+    .card-read-more {
+        border-top: 1px solid #D4D4D4;
+    }
+    .card-read-more a {
+        text-decoration: none !important;
+        padding:10px;
+        font-weight:600;
+        text-transform: uppercase;
+        background-color: #5CB85C !important;
+        color:white;!important;
+
+    }
+    .card-read-more a:hover {
+        color: white!important;
+
+    }
+</style>
+
+
+<div class="container">
+    <div class="row" >
+        {% for R in Results %}
+            <div class="col-xs-12 col-sm-4">
+
+                <div class="card" style="background-color: rgba(189, 195, 199,0.2);" >
+                    {% set image="" %}
+                    {% set titre="" %}
+                    {% set cat="" %}
+                    {% for I in R.pIReplies %}
+                        {% set image=I.getPI().getQuiz().getImage() %}
+                        {% set titre=I.getPI().getQuiz().getTitle() %}
+                        {% set cat=I.getPI().getQuiz().getCategory().getTitle() %}
+
+                    {% endfor %}
+                    <div class="card-toolbar" style="padding: 3%;  " >
+                        <center><h4><a style="font-weight: bold;">{{ titre|upper }}</a> in the category {{ cat |upper }} </h4></center>
+                    </div>
+                    <a class="img-card">
+                        <img src="{{ asset('uploads/' ~ image)}}">
+                    </a>
+                    <br />
+                    <div class="card-content" style="padding-top: 0% !important;">
+                        <h5><a class="card-title">
+                             {% for I in R.pIReplies  %}
+
+                                 <a style="padding-bottom:3%;"><a style="font-size: 110%; ">{{ I.getPI().getInformation()|capitalize  }} :</a> {{ I.reply }}</a><br>
+                                {% endfor %}
+                                <br>
+                                <a><h4 style="color:#5CB85C;"><a style="font-size: 110%;">Result: </a> {{ R.result |number_format(2) }} %</h4></a>
+                                <progress   max="100" value="{{ R.result |number_format(2) }}" style="width: 100% ;height: 25px;  "></progress>
+
+                            </a>
+                        </h5>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+<center><div >{{ knp_pagination_render(Results) }}</div></center>
+
+
+{% include 'Temp2.html.twig' %}
